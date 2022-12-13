@@ -1,14 +1,22 @@
-<form>
+<form (ngSubmit)="onSubmit()" #form="ngForm">
   <div class="mb-3">
-    <label for="exampleInputEmail1" class="form-label">Email 信箱</label>
-    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+    <label for="emailInput" class="form-label">{{ formsSchema.email.name }}</label>
+    <input id="emailInput" [type]="formsSchema.email.type" class="form-control" #email="ngModel" name="email"
+      [(ngModel)]="data.email" email [required]="formsSchema.email.validates.isRequired">
+    <div *ngIf="email.invalid && (email.dirty || email.touched)" class="invalid-feedback text-start"
+      [class.d-block]="email.errors && (email.errors['required'] || email.errors['email'])">{{
+      formsSchema.email.error }}
+    </div>
   </div>
   <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">密碼</label>
-    <input type="password" class="form-control" id="exampleInputPassword1">
+    <label for="exampleInputPassword1" class="form-label">{{ formsSchema.password.name }}</label>
+    <input [type]="formsSchema.password.type" class="form-control" #password="ngModel" name="password"
+      [(ngModel)]="data.password" [required]="formsSchema.password.validates.isRequired">
+    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="invalid-feedback text-start"
+      [class.d-block]="password.errors && password.errors['required']">{{ formsSchema.password.error.default }}
+    </div>
   </div>
   <div class="d-grid mt-4">
-    <button type="submit" class="btn btn-primary">立即登入</button>
+    <button type="submit" class="btn btn-primary" [disabled]="form.invalid">立即{{ title }}</button>
   </div>
 </form>
