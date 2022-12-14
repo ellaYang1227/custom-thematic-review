@@ -1,15 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-
-import { IndexComponent } from './index.component';
+import { LandscapesComponent } from './landscapes.component';
 
 const routes: Routes = [{
   path: '',
-  component: IndexComponent
+  component: LandscapesComponent
 }];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class IndexRoutingModule { }
+export class LandscapesRoutingModule { }

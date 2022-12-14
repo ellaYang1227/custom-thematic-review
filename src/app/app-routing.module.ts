@@ -2,20 +2,21 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthGuard } from '@guard/auth.guard';
 import { GuestGuard } from '@guard/guest.guard';
+import { ScadminGuard } from './guard/scadmin.guard';
 
 const routes: Routes = [{
-  path: 'index',
-  loadChildren: () => import('@pages/index/index.module').then(mod => mod.IndexModule)
+  path: 'landscapes',
+  loadChildren: () => import('@pages/landscapes/landscapes.module').then(mod => mod.LandscapesModule)
 }, {
   path: 'member',
   canActivate: [GuestGuard],
   loadChildren: () => import('@pages/member/member.module').then(mod => mod.MemberModule)
 }, {
   path: 'scadmin',
-  canActivate: [AuthGuard],
+  canActivate: [AuthGuard, ScadminGuard],
   loadChildren: () => import('@pages/scadmin/scadmin.module').then(mod => mod.ScadminModule)
 }, {
-  path: '**', redirectTo: '/index', pathMatch: 'full'
+  path: '**', redirectTo: '/landscapes', pathMatch: 'full'
 }];
 
 @NgModule({

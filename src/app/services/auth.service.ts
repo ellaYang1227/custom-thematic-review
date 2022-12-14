@@ -12,7 +12,7 @@ export class AuthService {
     return localStorage.getItem('accessToken');
   }
 
-  public get user(): string | null {
+  public get user(): any {
     const user = localStorage.getItem('user');
     return user ? this.cryptoJsService.decrypt(user) : null;
   }
@@ -44,8 +44,8 @@ export class AuthService {
   ) { }
 
   logout(): void {
-    // 刪除 cookie
-    this.changeCookie();
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('user');
   }
 
   // 改變 cookie

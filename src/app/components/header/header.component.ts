@@ -10,7 +10,6 @@ import { AuthService } from '@services/auth.service';
 export class HeaderComponent implements OnInit {
   name = Company.name;
 
-
   public get currentUrl(): string {
     return location.pathname;
   }

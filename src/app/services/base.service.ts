@@ -21,7 +21,7 @@ export class BaseService {
 
   getHeader(): {} {
     const access_token = AuthService.prototype.cookie_access_token;
-
+    console.log(access_token)
     if (access_token) {
       let header: HttpHeaders;
       header = new HttpHeaders().set('Authorization', `Bearer ${access_token}`);
@@ -41,51 +41,84 @@ export class BaseService {
     return result;
   }
 
-  covertReturn(data: any): any {
-    if (data.success) {
-      return data.data;
-    } else {
-      this.spinner.hide();
+  errorMsg(err: any): any {
+    // jwt expired 過期
+    this.spinner.hide();
+    let text = err;
+    let logout = true;
 
-      const swal: any = {};
-      const error = (data.type || data.message);
-      if (error.indexOf('未登入') > -1 || error.indexOf('axios') > -1 ||
-        error.indexOf('路由') > -1 || error.indexOf('語法') > -1 || error.indexOf('系統錯誤') > -1 ||
-        error.indexOf('會員不存在') > -1 || error.indexOf('Token') > -1) {
-        swal.title = '系統訊息';
-        swal.msg = data.message;
-        if (error.indexOf('未登入') > -1 || error.indexOf('Token') > -1) { swal.logout = true }
-      } else {
-        console.error(data);
-        return data;
-      }
-
-      if (swal.title || swal.msg) {
-        swalPopup.fire({
-          title: swal.title,
-          text: swal.msg,
-          icon: 'error',
-          allowOutsideClick: false,
-          showCloseButton: false,
-          showCancelButton: false,
-          confirmButtonText: swal.logout ? '立即登入' : '回上一頁',
-          customClass: {
-            confirmButton: 'btn btn-outline-secondary',
-            cancelButton: 'btn btn-outline-secondary'
-          },
-          buttonsStyling: false,
-          timer: swal.logout ? 5000 : null
-        }).then((result: any) => {
-          if (result.isConfirmed && !swal.logout) { window.history.back() }
-
-          if (swal.logout) {
-            AuthService.prototype.logout();
-            AuthService.prototype.redirectUrl = window.location.href;
-          }
-
-          return false;
-        });
-      }
+    if (err.match('jwt expired')) {
+      text = '授權時間到期，請重新登入';
     }
+
+    swalPopup.fire({
+      title: '系統訊息',
+      text: text,
+      icon: 'error',
+      allowOutsideClick: false,
+      showCloseButton: false,
+      showCancelButton: false,
+      confirmButtonText: logout ? '立即登入' : '回上一頁',
+      customClass: {
+        confirmButton: 'btn btn-outline-secondary',
+        cancelButton: 'btn btn-outline-secondary'
+      },
+      buttonsStyling: false,
+      timer: logout ? 5000 : null
+    }).then((result: any) => {
+      if (result.isConfirmed && !logout) { window.history.back() }
+
+      if (logout) {
+        AuthService.prototype.logout();
+        window.location.href = '/member/login';
+      }
+
+      return false;
+    });
+    // if (data.success) {
+    //   return data.data;
+    // } else {
+    //   this.spinner.hide();
+
+    //   const swal: any = {};
+    //   const error = (data.type || data.message);
+    //   if (error.indexOf('未登入') > -1 || error.indexOf('axios') > -1 ||
+    //     error.indexOf('路由') > -1 || error.indexOf('語法') > -1 || error.indexOf('系統錯誤') > -1 ||
+    //     error.indexOf('會員不存在') > -1 || error.indexOf('Token') > -1) {
+    //     swal.title = '系統訊息';
+    //     swal.msg = data.message;
+    //     if (error.indexOf('未登入') > -1 || error.indexOf('Token') > -1) { swal.logout = true }
+    //   } else {
+    //     console.error(data);
+    //     return data;
+    //   }
+
+    //   if (swal.title || swal.msg) {
+    //     swalPopup.fire({
+    //       title: swal.title,
+    //       text: swal.msg,
+    //       icon: 'error',
+    //       allowOutsideClick: false,
+    //       showCloseButton: false,
+    //       showCancelButton: false,
+    //       confirmButtonText: swal.logout ? '立即登入' : '回上一頁',
+    //       customClass: {
+    //         confirmButton: 'btn btn-outline-secondary',
+    //         cancelButton: 'btn btn-outline-secondary'
+    //       },
+    //       buttonsStyling: false,
+    //       timer: swal.logout ? 5000 : null
+    //     }).then((result: any) => {
+    //       if (result.isConfirmed && !swal.logout) { window.history.back() }
+
+    //       if (swal.logout) {
+    //         AuthService.prototype.logout();
+    //         AuthService.prototype.redirectUrl = window.location.href;
+    //       }
+
+    //       return false;
+    //     });
+    //   }
+    // }
   }
 }

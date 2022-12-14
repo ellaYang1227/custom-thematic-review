@@ -34,7 +34,7 @@ export class MemberService extends BaseService {
 
   // 0: 一般使用者 1:管理者
   register(body: any): Observable<any> {
-    body.permissions = 0;
+    body.permissions = 1;
     return this.http.post<any>(this.API_ROOT + '/register', body)
       .pipe(map(result => {
         console.log(result)
@@ -46,9 +46,9 @@ export class MemberService extends BaseService {
   }
 
   setAuth(data: any) {
-    console.log(data.permissions)
+    console.log(data.user.permissions)
     localStorage.setItem('accessToken', data.accessToken);
     localStorage.setItem('user', this.cryptoJsService.encrypt(data.user));
-    this.router.navigate([data.permissions ? '/index' : '/scadmin']);
+    this.router.navigate([data.user.permissions ? '/scadmin/landscapes' : '/landscapes']);
   }
 }

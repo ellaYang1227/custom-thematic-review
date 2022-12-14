@@ -10,7 +10,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class AppComponent {
   title = Company.name;
-  show = false;
+  isMember = false;
 
   constructor(
     private router: Router,
@@ -18,10 +18,10 @@ export class AppComponent {
   ) {
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationStart) { this.spinner.show() }
-    });
 
-    if (event instanceof NavigationEnd) {
-      setTimeout(() => this.show = this.router.url.match('member') ? false : true, 0);
-    }
+      if (event instanceof NavigationEnd) {
+        setTimeout(() => this.isMember = this.router.url.match('member') ? true : false, 0);
+      }
+    });
   }
 }

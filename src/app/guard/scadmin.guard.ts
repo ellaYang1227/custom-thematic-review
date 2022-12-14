@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class GuestGuard implements CanActivate, CanActivateChild {
+export class ScadminGuard implements CanActivate, CanActivateChild {
   constructor(
     private authService: AuthService,
     private router: Router
@@ -25,8 +25,7 @@ export class GuestGuard implements CanActivate, CanActivateChild {
   }
 
   checkIndex(url: string): true | UrlTree {
-    console.log(this.authService.user)
-    if (!this.authService.user) { return true }
+    if (this.authService.user?.permissions) { return true }
     return this.router.parseUrl('/landscapes');
   }
 }

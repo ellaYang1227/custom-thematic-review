@@ -29,4 +29,31 @@ export const FormsSchema: any = {
       pattern: '^(?=.*[0-9])(?=.*[a-zA-Z]).{8,}$'
     }
   },
+  landscape: {
+    title: {
+      name: '標題',
+      type: 'text',
+      error: '必填欄位',
+      validates: {
+        isRequired: true
+      }
+    },
+    content: {
+      name: '內容',
+      type: 'textarea',
+      error: '必填欄位',
+      validates: {
+        isRequired: true
+      }
+    },
+    image: {
+      name: '圖片網址',
+      type: 'text',
+      error: '必填欄位，須為 https 開頭的圖片網址格式',
+      validates: {
+        isRequired: true,
+        pattern: '^(https://)[^ ]+'
+      }
+    }
+  }
 };

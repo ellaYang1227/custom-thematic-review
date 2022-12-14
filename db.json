@@ -48,7 +48,22 @@
       "name": "楊苡安",
       "permissions": 0,
       "id": 7
+    },
+    {
+      "email": "admin@gmail.com",
+      "password": "$2a$10$QXZ/hvY1aaaRdRIYgUOK/ejNUEULxebnsxbivB1DJ2Mh/I.qcliTy",
+      "name": "我是管理員",
+      "permissions": 1,
+      "id": 8
     }
   ],
-  "attractions": []
+  "landscapes": [
+    {
+      "title": "壽山動物園",
+      "content": "南部最大的公立動物園，為高雄市府觀光局管轄，民眾親子休閒、戶外教學、生態科普及觀光遊憩等多重功能與服務。",
+      "image": "https://khh.travel/content/images/Attractions/20224/640x480_attractions-image--jnpkpqwcegpzakrwc16bw.jpg",
+      "creation_date": "2022-12-14T13:59:44.271Z",
+      "id": 1
+    }
+  ]
 }

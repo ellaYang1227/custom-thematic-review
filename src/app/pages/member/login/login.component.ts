@@ -29,13 +29,19 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.data)
     this.memberService.login(this.data).subscribe(res => {
       if (res && !res.success) {
+        let text = res;
+        if (res === 'Cannot find user') {
+          text = '找不到此用戶';
+        } else if (res === 'Incorrect password' || res === 'Password is too short') {
+          text = '密碼錯誤';
+        }
+
         swalToast.fire({
           icon: 'error',
           title: `${this.title}失敗`,
-          text: res === 'Cannot find user' ? '找不到此用戶' : res
+          text: text
         });
       }
     });
