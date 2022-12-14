@@ -1,6 +1,7 @@
 <form (ngSubmit)="onSubmit()" #form="ngForm">
   <div class="mb-3">
-    <label for="emailInput" class="form-label">{{ formsSchema.email.name }}</label>
+    <label for="emailInput" class="form-label">{{ formsSchema.email.name }}<font class="text-danger"
+        *ngIf="formsSchema.email.validates.isRequired">*</font></label>
     <input id="emailInput" [type]="formsSchema.email.type" class="form-control" #email="ngModel" name="email"
       [(ngModel)]="data.email" email [required]="formsSchema.email.validates.isRequired">
     <div *ngIf="email.invalid && (email.dirty || email.touched)" class="invalid-feedback text-start"
@@ -9,14 +10,15 @@
     </div>
   </div>
   <div class="mb-3">
-    <label for="exampleInputPassword1" class="form-label">{{ formsSchema.password.name }}</label>
-    <input [type]="formsSchema.password.type" class="form-control" #password="ngModel" name="password"
-      [(ngModel)]="data.password" [required]="formsSchema.password.validates.isRequired">
+    <label for="passwordInput" class="form-label">{{ formsSchema.password.name }}<font class="text-danger"
+        *ngIf="formsSchema.email.validates.isRequired">*</font></label>
+    <input id="passwordInput" [type]="formsSchema.password.type" class="form-control" #password="ngModel"
+      name="password" [(ngModel)]="data.password" [required]="formsSchema.password.validates.isRequired">
     <div *ngIf="password.invalid && (password.dirty || password.touched)" class="invalid-feedback text-start"
       [class.d-block]="password.errors && password.errors['required']">{{ formsSchema.password.error.default }}
     </div>
   </div>
-  <div class="d-grid mt-4">
+  <div class="d-grid mt-4 pt-3">
     <button type="submit" class="btn btn-primary" [disabled]="form.invalid">立即{{ title }}</button>
   </div>
 </form>

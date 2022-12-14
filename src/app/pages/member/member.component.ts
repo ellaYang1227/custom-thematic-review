@@ -19,7 +19,7 @@ export class MemberComponent implements OnInit {
   ) {
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
-        this.title = event.url.match('login') ? '登入' : '註冊';
+        this.title = location.pathname.match('login') ? '登入' : '註冊';
         this.titleServer.setTitle(`${this.title} | ${Company.name}`);
         this.spinner.hide();
       }

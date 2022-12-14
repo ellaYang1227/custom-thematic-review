@@ -1,4 +1,54 @@
 {
-  "users": [],
-  "attractions":[]
+  "users": [
+    {
+      "email": "ggtest01@gmail.com",
+      "password": "$2a$10$OsNqN/jl8ot8NwfLpvQXiexr2yePBVUjFwZliyJf9sskcvOQ2LrDa",
+      "name": "楊測試",
+      "permissions": 0,
+      "id": 1
+    },
+    {
+      "email": "ggtest15@gmail.com",
+      "password": "$2a$10$3x5ToTTzL9LhtRBxMgHmeei7aU7wGPEk.DmfIdmyezWKtqVUx6bz.",
+      "name": "楊測試",
+      "permissions": 0,
+      "id": 2
+    },
+    {
+      "email": "ellayang@mail.apex.com.tw",
+      "password": "$2a$10$G633NOoKrKr4rNXULovuVuRKb9PKJ0vOG78muJmvC.pnq7aIi7eGi",
+      "name": "楊測試",
+      "permissions": 0,
+      "id": 3
+    },
+    {
+      "email": "ggtest14@gmail.com",
+      "password": "$2a$10$pP6i7fNwliXezgDZEKh3teiM486oFwDSw8XimUuaPeDMYPbcz2Fz.",
+      "name": "楊測試",
+      "permissions": 0,
+      "id": 4
+    },
+    {
+      "email": "ggtest12@gmail.com",
+      "password": "$2a$10$cfMqJ8eXc0h44ypSdOwfeuciyzUx0TcNluRkCS0jwiQWjggN.0pB.",
+      "name": "楊楊楊",
+      "permissions": 0,
+      "id": 5
+    },
+    {
+      "email": "ggtest11@gmail.com",
+      "password": "$2a$10$H9wxzomEU.K/59gT7vVq4ON09EE9168oVSMc60yzAUq1jCYjcJCyC",
+      "name": "楊測試",
+      "permissions": 0,
+      "id": 6
+    },
+    {
+      "email": "ggtest02@gmail.com",
+      "password": "$2a$10$XxptZEDuI/5dBA4DuQf/ieIJ/phXww2hfrvHjIHxmwGyYienJPaqO",
+      "name": "楊苡安",
+      "permissions": 0,
+      "id": 7
+    }
+  ],
+  "attractions": []
 }

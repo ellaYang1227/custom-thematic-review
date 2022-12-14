@@ -1,34 +1,47 @@
 import { Injectable } from '@angular/core';
 import { environment } from '@env/environment';
+import { CryptoJsService } from '@models/crypto-js-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  access_token!: string;
+  public access_token!: string;
 
-  public get user(): any {
-    if (this.cookie_access_token) {
-      if (this.access_token !== this.cookie_access_token) { this.access_token = this.cookie_access_token }
-      //const user = this.cryptoJsService.decrypt(this.cookie_access_token);
-      return 'user';
-    } else {
-      if (this.access_token) { location.reload() }
-      localStorage.removeItem('access_token');
-      return undefined;
-    }
+  public get cookie_access_token(): string | null {
+    return localStorage.getItem('accessToken');
   }
 
-  // 取得 access_token
-  public get cookie_access_token(): string {
-    const searchStr = 'access_token=';
-    let access_token = document.cookie.split(';').find(item => item.trim().indexOf(searchStr) > -1);
-    return access_token ? access_token.replace(searchStr, '') : '';
+  public get user(): string | null {
+    const user = localStorage.getItem('user');
+    return user ? this.cryptoJsService.decrypt(user) : null;
   }
+
+
+  // public get user(): any {
+  //   if (this.cookie_access_token) {
+  //     if (this.access_token !== this.cookie_access_token) { this.access_token = this.cookie_access_token }
+  //     //const user = this.cryptoJsService.decrypt(this.cookie_access_token);
+  //     return 'user';
+  //   } else {
+  //     if (this.access_token) { location.reload() }
+  //     localStorage.removeItem('access_token');
+  //     return undefined;
+  //   }
+  // }
+
+  // // 取得 access_token
+  // public get cookie_access_token(): string {
+  //   const searchStr = 'access_token=';
+  //   let access_token = document.cookie.split(';').find(item => item.trim().indexOf(searchStr) > -1);
+  //   return access_token ? access_token.replace(searchStr, '') : '';
+  // }
 
   redirectUrl!: string;
 
-  constructor() { }
+  constructor(
+    private cryptoJsService: CryptoJsService
+  ) { }
 
   logout(): void {
     // 刪除 cookie
