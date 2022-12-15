@@ -1,12 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { CryptoJsService } from '@models/crypto-js-service';
+import { SwalDefaultService } from '@services/swal-default.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { catchError, map, Observable, of } from 'rxjs';
 import { AuthService } from './auth.service';
 import { BaseService } from './base.service';
-import { SwalDefaultService } from '@services/swal-default.service';
 
 let swalPopup: any;
 let swalToast: any;
@@ -27,15 +25,6 @@ export class LandscapeService extends BaseService {
     swalToast = this.swalDefaultService.toastDefault;
   }
 
-  addLandscape(body: any): Observable<any> {
-    body.update_date = new Date();
-    return this.http.post<any>(`${this.API_ROOT}/600/users/${this.authService.user.id}/landscapes`, body, this.getHeader())
-      .pipe(map(result => result), catchError(error => {
-        this.errorMsg(error.error);
-        return of(false);
-      }));
-  }
-
   getLandscapes(): Observable<any> {
     return this.http.get<any>(`${this.API_ROOT}/444/landscapes`)
       .pipe(map(result => result.sort((a: any, b: any) => a.update_date > b.update_date ? -1 : 1)), catchError(error => {
@@ -51,6 +40,23 @@ export class LandscapeService extends BaseService {
         return of(false);
       }));
   }
+
+  addLandscape(body: any): Observable<any> {
+    return this.http.post<any>(`${this.API_ROOT}/600/landscapes`, body, this.getHeader())
+      .pipe(map(result => result), catchError(error => {
+        console.error(error.error)
+        return of(this.errorMsg(error.error));
+      }));
+  }
+
+  editLandscape(id: number, body: any): Observable<any> {
+    return this.http.patch<any>(`${this.API_ROOT}/600/landscapes/${id}`, body, this.getHeader())
+      .pipe(map(result => result), catchError(error => {
+        this.errorMsg(error.error);
+        return of(false);
+      }));
+  }
+
 
   delLandscape(id: number): Observable<any> {
     return this.http.delete<any>(`${this.API_ROOT}/600/landscapes/${id}`, this.getHeader())
@@ -77,9 +83,21 @@ export class LandscapeService extends BaseService {
       }));
   }
 
-  editLandscape(id: number, body: any): Observable<any> {
-    body.update_date = new Date();
-    return this.http.patch<any>(`${this.API_ROOT}/600/landscapes/${id}`, body, this.getHeader())
+  addCollect(id: number): Observable<any> {
+    const body = {
+      landscapeId: id,
+      userId: this.authService.user.id,
+      create_date: new Date()
+    };
+
+    return this.http.post<any>(`${this.API_ROOT}/660/collects`, body, this.getHeader())
+      .pipe(map(result => result), catchError(error => {
+        return of(this.errorMsg(error.error));
+      }));
+  }
+
+  myCollects(): Observable<any> {
+    return this.http.get<any>(`${this.API_ROOT}/400/collects`, this.getHeader())
       .pipe(map(result => result), catchError(error => {
         this.errorMsg(error.error);
         return of(false);

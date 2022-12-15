@@ -4,6 +4,7 @@ import { Title } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Company } from '@data/company';
 import { FormsSchema } from '@data/forms-schema';
+import { AuthService } from '@services/auth.service';
 import { LandscapeService } from '@services/landscape.service';
 import { SwalDefaultService } from '@services/swal-default.service';
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -37,6 +38,7 @@ export class EditLandscapeComponent implements OnInit {
     private titleServer: Title,
     private route: ActivatedRoute,
     private router: Router,
+    private authService: AuthService,
     private landscapeService: LandscapeService,
     private swalDefaultService: SwalDefaultService,
     private spinner: NgxSpinnerService
@@ -91,8 +93,11 @@ export class EditLandscapeComponent implements OnInit {
   onSubmit() {
     this.spinner.show();
     this.isSending = true;
+    this.data.update_date = new Date();
+
     // 新增
     if (!this.id) {
+      this.data.userId = this.authService.user.id;
       this.landscapeService.addLandscape(this.data).subscribe(res => {
         this.setSwalToast(res.id ? true : false);
       });
@@ -118,7 +123,11 @@ export class EditLandscapeComponent implements OnInit {
       icon: success ? 'success' : 'error',
       title: `${this.title}${success ? '成功' : '失敗'}`,
     }).then((res: any) => {
-      if (success) { this.router.navigate(['/scadmin/landscapes']) }
+      if (success) {
+        this.router.navigate(['/scadmin/landscapes'])
+      } else {
+        this.isSending = false;
+      }
     });;
   }
 }

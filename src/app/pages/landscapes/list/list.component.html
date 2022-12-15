@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-sm-6 col-lg-4 mb-4" *ngFor="let landscape of landscapes">
+    <div class="card h-100">
+      <div class="card-body">
+        <div class="img-box mb-3"><img [src]="landscape.image" [alt]="landscape.name"></div>
+        <h1 class="card-title h5"><strong>{{ landscape.name }}</strong></h1>
+        <p class="card-text text-muted text-truncate-row-3">{{ landscape.content }}</p>
+      </div>
+      <div class="card-footer d-flex align-items-center">
+        <app-collect-btn [id]="landscape.id" (resIsSuccess)="onResIsSuccess($event)" class="w-50 text-center">
+        </app-collect-btn>
+        <a href="#" class="w-50 text-center text-decoration-none text-secondary fw-bold border-start"><small>
+            <fa-icon [icon]="['fas', 'list']" class="me-1"></fa-icon>詳情
+          </small></a>
+      </div>
+    </div>
+  </div>
+</div>

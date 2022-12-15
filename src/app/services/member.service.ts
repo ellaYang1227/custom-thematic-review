@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CryptoJsService } from '@models/crypto-js-service';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { catchError, map, Observable, of } from 'rxjs';
@@ -15,6 +15,7 @@ export class MemberService extends BaseService {
   constructor(
     private http: HttpClient,
     private router: Router,
+    private route: ActivatedRoute,
     private authService: AuthService,
     private cryptoJsService: CryptoJsService,
     override spinner: NgxSpinnerService
@@ -49,6 +50,14 @@ export class MemberService extends BaseService {
     console.log(data.user.permissions)
     localStorage.setItem('accessToken', data.accessToken);
     localStorage.setItem('user', this.cryptoJsService.encrypt(data.user));
-    this.router.navigate([data.user.permissions ? '/scadmin/landscapes' : '/landscapes']);
+    const redirectUrl = this.route.snapshot.queryParamMap.get('redirectUrl');
+    let goToUrl = '';
+    if (redirectUrl) {
+      goToUrl = redirectUrl;
+    } else {
+      goToUrl = data.user.permissions ? '/scadmin/landscapes' : '/landscapes';
+    }
+
+    this.router.navigate([goToUrl]);
   }
 }
