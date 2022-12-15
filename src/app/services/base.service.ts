@@ -44,11 +44,15 @@ export class BaseService {
   errorMsg(err: any): any {
     // jwt expired 過期
     this.spinner.hide();
+    let title = '系統訊息';
     let text = err;
     let logout = true;
 
     if (err.match('jwt expired')) {
-      text = '授權時間到期，請重新登入';
+      text = '登入時間到期，請重新登入';
+    } else {
+      console.error(err);
+      return err;
     }
 
     swalPopup.fire({

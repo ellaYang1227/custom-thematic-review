@@ -11,10 +11,10 @@ const routes: Routes = [{
     path: 'landscapes',
     component: LandscapeListComponent,
   }, {
-    path: 'landscapes/edit/:id',
+    path: 'landscapes/edit',
     component: EditLandscapeComponent,
   }, {
-    path: 'landscapes/edit',
+    path: 'landscapes/edit/:id',
     component: EditLandscapeComponent,
   }, {
     path: '**', redirectTo: '/scadmin/landscapes', pathMatch: 'full'

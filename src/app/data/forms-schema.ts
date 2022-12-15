@@ -30,8 +30,8 @@ export const FormsSchema: any = {
     }
   },
   landscape: {
-    title: {
-      name: '標題',
+    name: {
+      name: '名稱',
       type: 'text',
       error: '必填欄位',
       validates: {
@@ -39,7 +39,7 @@ export const FormsSchema: any = {
       }
     },
     content: {
-      name: '內容',
+      name: '描述',
       type: 'textarea',
       error: '必填欄位',
       validates: {

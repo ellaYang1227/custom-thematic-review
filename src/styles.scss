@@ -7,6 +7,22 @@
 * ==========================================================================
 */
 
+caption{
+  padding: 0.5rem $table-cell-padding-y;
+}
+
+.img-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  flex-shrink: 0;
+
+  img {
+    width: 100%;
+  }
+}
+
 /*
 * ==========================================================================
 * sweetalert2

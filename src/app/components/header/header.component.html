@@ -1,6 +1,8 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container">
-    <a class="navbar-brand" href="/landscapes">{{ name }}</a>
+    <a class="navbar-brand" [href]="currentUrl.match('/scadmin') ? '/scadmin/landscapes' : '/landscapes'"><strong
+        *ngIf="currentUrl.match('/scadmin')">〔後台管理〕</strong>{{ name
+      }}</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -9,16 +11,17 @@
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link" aria-current="page" href="#" routerLink="/landscapes" routerLinkActive="disabled"
-            [routerLinkActiveOptions]="{ exact: true }">{{ currentUrl.match('/scadmin') ? '返回前台' : '景點收藏' }}</a>
+            [routerLinkActiveOptions]="{ exact: true }">{{ currentUrl.match('/scadmin') ? '返回前台' : '景點列表' }}</a>
         </li>
         <ng-container *ngIf="authService.user">
           <li class="nav-item" *ngIf="!currentUrl.match('/scadmin')">
             <a class="nav-link" aria-current="page" href="#" routerLink="/myCollect" routerLinkActive="disabled"
               [routerLinkActiveOptions]="{ exact: true }">我的收藏</a>
           </li>
-          <li class="nav-item" *ngIf="authService.user.permissions">
-            <a class="nav-link" aria-current="page" routerLink="/scadmin/landscapes" routerLinkActive="d-none"
-              [routerLinkActiveOptions]="{ exact: false }">後台管理</a>
+          <li class="nav-item order-first" [class.order-first]="currentUrl.match('/scadmin')"
+            *ngIf="authService.user.permissions">
+            <a class="nav-link" aria-current="page" routerLink="/scadmin/landscapes" routerLinkActive="disabled"
+              [routerLinkActiveOptions]="{ exact: true }">景點列表管理</a>
           </li>
           <li class="nav-item">
             <a class="nav-link text-primary" href="#" aria-current="page"

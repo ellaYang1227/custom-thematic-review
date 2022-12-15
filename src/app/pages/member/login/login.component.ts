@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     this.memberService.login(this.data).subscribe(res => {
-      if (res && !res.success) {
+      if (res) {
         let text = res;
         if (res === 'Cannot find user') {
           text = '找不到此用戶';

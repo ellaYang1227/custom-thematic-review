@@ -1,26 +1,26 @@
 <div class="row justify-content-center">
-  <div class="col-md-6">
+  <div class="col-md-8 col-xl-6">
     <h1 class="h3 fw-bold text-dark">{{ title }}</h1>
     <form (ngSubmit)="onSubmit()" #form="ngForm">
       <div class="card">
         <div class="card-body">
           <div class="mb-3">
-            <label for="titleInput" class="form-label">{{ formsSchema.landscape.title.name }}<font class="text-danger"
-                *ngIf="formsSchema.landscape.title.validates.isRequired">*</font></label>
-            <input id="titleInput" [type]="formsSchema.landscape.title.type" class="form-control"
-              #titleLandscape="ngModel" name="titleLandscape" [(ngModel)]="data.title"
-              [required]="formsSchema.landscape.title.validates.isRequired">
-            <div *ngIf="titleLandscape.invalid && (titleLandscape.dirty || titleLandscape.touched)"
-              class="invalid-feedback text-start"
-              [class.d-block]="titleLandscape.errors && titleLandscape.errors['required']">{{
-              formsSchema.landscape.title.error }}
+            <label for="nameInput" class="form-label">{{ formsSchema.landscape.name.name }}<font class="text-danger"
+                *ngIf="formsSchema.landscape.name.validates.isRequired">*</font></label>
+            <input id="nameInput" [type]="formsSchema.landscape.name.type" class="form-control" #name="ngModel"
+              name="name" [(ngModel)]="data.name" [required]="formsSchema.landscape.name.validates.isRequired"
+              [disabled]="isSending">
+            <div *ngIf="name.invalid && (name.dirty || name.touched)" class="invalid-feedback text-start"
+              [class.d-block]="name.errors && name.errors['required']">{{
+              formsSchema.landscape.name.error }}
             </div>
           </div>
           <div class="mb-3">
             <label for="contentInput" class="form-label">{{ formsSchema.landscape.content.name }}<font
                 class="text-danger" *ngIf="formsSchema.landscape.content.validates.isRequired">*</font></label>
             <textarea class="form-control" id="contentInput" rows="5" #content="ngModel" name="content"
-              [(ngModel)]="data.content" [required]="formsSchema.landscape.content.validates.isRequired"></textarea>
+              [(ngModel)]="data.content" [required]="formsSchema.landscape.content.validates.isRequired"
+              [disabled]="isSending"></textarea>
             <div *ngIf="content.invalid && (content.dirty || content.touched)" class="invalid-feedback text-start"
               [class.d-block]="content.errors && content.errors['required']">{{ formsSchema.landscape.content.error }}
             </div>
@@ -30,7 +30,7 @@
                 *ngIf="formsSchema.landscape.image.validates.isRequired">*</font></label>
             <input id="imageInput" [type]="formsSchema.landscape.image.type" class="form-control" #image="ngModel"
               name="image" [(ngModel)]="data.image" [required]="formsSchema.landscape.image.validates.isRequired"
-              [pattern]="formsSchema.landscape.image.validates.pattern">
+              [pattern]="formsSchema.landscape.image.validates.pattern" [disabled]="isSending">
             <div *ngIf="image.invalid && (image.dirty || image.touched)" class="invalid-feedback text-start"
               [class.d-block]="image.errors && (image.errors['required'] || image.errors['pattern'])">{{
               formsSchema.landscape.image.error }}
@@ -38,9 +38,10 @@
           </div>
         </div>
       </div>
-      <div class="d-grid gap-2 d-md-flex justify-content-md-end mt-3">
-        <button class="btn btn-outline-secondary" type="button" (click)="form.resetForm()">重設</button>
-        <button class="btn btn-primary" type="submit" [disabled]="form.invalid">立即{{ title.replace('景點', '') }}</button>
+      <div class="gap-2 d-flex justify-content-end mt-3">
+        <button class="btn btn-outline-secondary" type="button" (click)="resetForm()" [disabled]="isSending">重設</button>
+        <button class="btn btn-primary" type="submit" [disabled]="form.invalid || !isValueChange || isSending">立即{{
+          title.replace('景點', '') }}</button>
       </div>
     </form>
   </div>

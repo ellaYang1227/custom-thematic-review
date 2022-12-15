@@ -31,7 +31,7 @@ export class RegisterComponent implements OnInit {
 
   onSubmit() {
     this.memberService.register(this.data).subscribe(res => {
-      if (res && !res.success) {
+      if (res) {
         swalToast.fire({
           icon: 'error',
           title: `${this.title}失敗`,
