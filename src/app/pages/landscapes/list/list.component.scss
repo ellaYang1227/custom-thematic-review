@@ -1,15 +1,1 @@
-.img-box {
-  height: 200px;
 
-  @media (min-width: 576px) and (max-width: 1199px) {
-    height: 150px;
-  }
-}
-
-.text-truncate-row-3 {
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  white-space: normal;
-  overflow: hidden;
-  -webkit-line-clamp: 3;
-}

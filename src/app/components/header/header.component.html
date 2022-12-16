@@ -15,7 +15,7 @@
         </li>
         <ng-container *ngIf="authService.user">
           <li class="nav-item" *ngIf="!currentUrl.match('/scadmin')">
-            <a class="nav-link" aria-current="page" href="#" routerLink="/myCollect" routerLinkActive="disabled"
+            <a class="nav-link" aria-current="page" href="#" routerLink="/myCollects" routerLinkActive="disabled"
               [routerLinkActiveOptions]="{ exact: true }">我的收藏</a>
           </li>
           <li class="nav-item order-first" [class.order-first]="currentUrl.match('/scadmin')"

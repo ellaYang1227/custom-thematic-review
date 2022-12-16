@@ -1,1 +1,13 @@
-<p>item works!</p>
+<div class="row align-items-center">
+    <div class="col-md-6 col-lg-5 mb-3 mb-md-0">
+        <div class="img-box rounded"><img [src]="landscape?.image" [alt]="landscape?.name" *ngIf="landscape?.image">
+        </div>
+    </div>
+    <div class="col-md">
+        <h1 class="h3 fw-bold d-flex align-items-center mb-0">{{ landscape?.name }}</h1>
+        <p class="card-text text-muted mb-2">{{ landscape?.content }}</p>
+        <app-collect-btn [id]="landscape?.id"></app-collect-btn>
+        <small class="text-black-50 border-top d-block mt-5 pt-2">最後更新時間：{{ landscape?.update_date | date: 'yyyy/MM/dd
+            HH:mm:ss' }}</small>
+    </div>
+</div>

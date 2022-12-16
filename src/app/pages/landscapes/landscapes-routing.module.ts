@@ -11,7 +11,7 @@ const routes: Routes = [{
     path: '',
     component: ListComponent,
   }, {
-    path: 'landscapes/:id',
+    path: ':id',
     component: ItemComponent,
   }, {
     path: '**', redirectTo: '/landscapes', pathMatch: 'full'

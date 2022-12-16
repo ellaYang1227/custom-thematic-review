@@ -1,0 +1,10 @@
+<h1 class="h3 fw-bold text-dark">{{ title }}</h1>
+<div class="row">
+    <ng-container *ngIf="myCollectLandscapes?.length; else noData">
+        <app-landscape-card [landscape]="landscape" *ngFor="let landscape of myCollectLandscapes"
+            class="col-sm-6 col-lg-4 mb-4"></app-landscape-card>
+    </ng-container>
+    <ng-template #noData>
+        <app-no-data></app-no-data>
+    </ng-template>
+</div>

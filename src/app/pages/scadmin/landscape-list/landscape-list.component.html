@@ -1,36 +1,37 @@
 <h1 class="h3 fw-bold text-dark d-flex align-items-center">{{ title }}<a href="#" [routerLink]="['edit']"
-    class="btn btn-primary ms-auto" role="button">新增景點</a></h1>
+        class="btn btn-primary ms-auto" role="button">新增景點</a></h1>
 <div class="table-responsive">
-  <table class="table table-striped table-hover align-middle">
-    <thead>
-      <tr class="text-secondary">
-        <th scope="col" class="py-2">#</th>
-        <th scope="col" class="py-2" width="25%">名稱</th>
-        <th scope="col" class="py-2">描述</th>
-        <th scope="col" class="py-2 text-center">更新時間</th>
-        <th scope="col" class="py-2" width="13%"></th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let landscape of landscapes; index as i">
-        <th scope="row">{{ i + 1}}</th>
-        <td>
-          <div class="d-flex align-items-center">
-            <div class="img-box me-3"><img [src]="landscape.image" [alt]="landscape.name"></div>
-            <strong>{{ landscape.name }}</strong>
-          </div>
-        </td>
-        <td>{{ landscape.content }}</td>
-        <td class="text-center"><small>{{ landscape.update_date | date: 'yyyy/MM/dd HH:mm:ss' }}</small></td>
-        <td class="text-center">
-          <div class="d-flex justify-content-center">
-            <a href="#" class="text-danger text-decoration-none"
-              (click)="$event.preventDefault(); delLandscape(landscape.id)">刪除</a>
-            <a href="#" [routerLink]="['edit', landscape.id]" class="text-primary text-decoration-none ms-3">編輯</a>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-    <caption class="text-end"><small>總共 {{ landscapes?.length }} 筆</small></caption>
-  </table>
+    <table class="table table-striped table-hover align-middle">
+        <thead>
+            <tr class="text-secondary">
+                <th scope="col" class="py-2">#</th>
+                <th scope="col" class="py-2" width="25%">名稱</th>
+                <th scope="col" class="py-2">描述</th>
+                <th scope="col" class="py-2 text-center">更新時間</th>
+                <th scope="col" class="py-2" width="13%"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let landscape of landscapes; index as i">
+                <th scope="row">{{ i + 1}}</th>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <div class="img-box me-3"><img [src]="landscape.image" [alt]="landscape.name"></div>
+                        <h2 class="mb-0 h6"><strong>{{ landscape.name }}</strong></h2>
+                    </div>
+                </td>
+                <td>{{ landscape.content }}</td>
+                <td class="text-center"><small>{{ landscape.update_date | date: 'yyyy/MM/dd HH:mm:ss' }}</small></td>
+                <td class="text-center">
+                    <div class="d-flex justify-content-center">
+                        <a href="#" class="text-danger text-decoration-none"
+                            (click)="$event.preventDefault(); delLandscape(landscape.id)">刪除</a>
+                        <a href="#" [routerLink]="['edit', landscape.id]"
+                            class="text-primary text-decoration-none ms-3">編輯</a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+        <caption class="text-end"><small>總共 {{ landscapes?.length }} 筆</small></caption>
+    </table>
 </div>

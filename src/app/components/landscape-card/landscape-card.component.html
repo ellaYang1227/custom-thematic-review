@@ -1,0 +1,15 @@
+<a href="#" [routerLink]="['/landscapes', landscape.id]" class="card h-100 text-decoration-none">
+    <div class="card-body">
+        <div class="img-box mb-3"><img [src]="landscape.image" [alt]="landscape.name"></div>
+        <h2 class="card-title text-dark h5"><strong>{{ landscape.name }}</strong></h2>
+        <p class="card-text text-muted text-truncate-row-3">{{ landscape.content }}</p>
+    </div>
+    <div class="card-footer d-flex align-items-center">
+        <app-collect-btn [id]="landscape.id" class="w-50 text-center">
+        </app-collect-btn>
+        <a href="#" [routerLink]="['/landscapes', landscape.id]"
+            class="w-50 text-center text-decoration-none text-secondary fw-bold border-start"><small>
+                <fa-icon [icon]="['fas', 'list']" class="me-1"></fa-icon>詳情
+            </small></a>
+    </div>
+</a>

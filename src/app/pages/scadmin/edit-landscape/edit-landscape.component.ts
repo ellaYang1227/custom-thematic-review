@@ -99,12 +99,12 @@ export class EditLandscapeComponent implements OnInit {
     if (!this.id) {
       this.data.userId = this.authService.user.id;
       this.landscapeService.addLandscape(this.data).subscribe(res => {
-        this.setSwalToast(res.id ? true : false);
+        this.setSwalToast(res?.id ? true : false);
       });
     } else {
       // 編輯
       this.landscapeService.editLandscape(+this.id, this.data).subscribe(res => {
-        this.setSwalToast(res.id ? true : false);
+        this.setSwalToast(res?.id ? true : false);
       });
     }
   }

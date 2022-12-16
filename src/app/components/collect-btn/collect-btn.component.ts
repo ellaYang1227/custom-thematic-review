@@ -1,12 +1,12 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '@services/auth.service';
 import { LandscapeService } from '@services/landscape.service';
 import { SwalDefaultService } from '@services/swal-default.service';
 import { NgxSpinnerService } from 'ngx-spinner';
+import { Subscription } from 'rxjs';
 
 let swalPopup: any;
-let swalToast: any;
 
 @Component({
   selector: 'app-collect-btn',
@@ -14,9 +14,9 @@ let swalToast: any;
   styleUrls: ['./collect-btn.component.scss']
 })
 export class CollectBtnComponent implements OnInit {
-
+  myCollects$!: Subscription;
+  currentCollectId!: number;
   @Input() id!: number;
-  @Output() resIsSuccess = new EventEmitter<boolean>();
 
   constructor(
     private router: Router,
@@ -26,14 +26,18 @@ export class CollectBtnComponent implements OnInit {
     private spinner: NgxSpinnerService
   ) {
     swalPopup = this.swalDefaultService.popupDefault;
-    swalToast = this.swalDefaultService.toastDefault;
   }
 
   ngOnInit(): void {
+    this.myCollects$ = this.landscapeService.myCollects$.subscribe(res => {
+      if (res) {
+        this.currentCollectId = res.find(item => item.landscapeId === this.id)?.id;
+        this.spinner.hide();
+      }
+    });
   }
 
   changeCollect() {
-    console.log(this.id);
     if (!this.authService.user) {
       swalPopup.fire({
         icon: 'info',
@@ -46,11 +50,18 @@ export class CollectBtnComponent implements OnInit {
       });
     } else {
       this.spinner.show();
-      this.landscapeService.addCollect(this.id).subscribe(res => {
-        console.log(res)
-        if (res.id) { this.resIsSuccess.emit(res.id ? true : false) }
-      })
-    }
+      if (!this.currentCollectId) {
+        this.landscapeService.addCollect(this.id).subscribe(res => {
+          if (res?.id) { this.spinner.hide() }
+        });
+      } else {
+        this.landscapeService.delCollect(this.currentCollectId).subscribe(res => this.spinner.hide());
+      }
 
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.myCollects$.unsubscribe();
   }
 }

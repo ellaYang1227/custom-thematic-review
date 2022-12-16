@@ -38,7 +38,6 @@ export class MemberService extends BaseService {
     body.permissions = 0;
     return this.http.post<any>(this.API_ROOT + '/register', body)
       .pipe(map(result => {
-        console.log(result)
         if (result) { this.setAuth(result) }
       }), catchError(error => {
         console.error(error.error);
@@ -47,7 +46,6 @@ export class MemberService extends BaseService {
   }
 
   setAuth(data: any) {
-    console.log(data.user.permissions)
     localStorage.setItem('accessToken', data.accessToken);
     localStorage.setItem('user', this.cryptoJsService.encrypt(data.user));
     const redirectUrl = this.route.snapshot.queryParamMap.get('redirectUrl');

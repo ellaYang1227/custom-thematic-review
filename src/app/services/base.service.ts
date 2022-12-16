@@ -21,7 +21,6 @@ export class BaseService {
 
   getHeader(): {} {
     const access_token = AuthService.prototype.cookie_access_token;
-    console.log(access_token)
     if (access_token) {
       let header: HttpHeaders;
       header = new HttpHeaders().set('Authorization', `Bearer ${access_token}`);
@@ -42,17 +41,18 @@ export class BaseService {
   }
 
   errorMsg(err: any): any {
-    console.log(err)
     this.spinner.hide();
-    let text = err;
+    let text = err.err;
     let logout = true;
 
-    if (err.match('jwt expired')) {
-      console.log(err)
+    if (text?.match('jwt expired') || text?.match('Missing authorization header')) {
       text = '登入時間到期，請重新登入';
+    } else if (err.status === 404) {
+      text = '找不到該筆資料';
+      logout = false;
     } else {
-      console.error(err);
-      return err;
+      console.error(text);
+      return text;
     }
 
     swalPopup.fire({
@@ -74,55 +74,10 @@ export class BaseService {
 
       if (logout) {
         AuthService.prototype.logout();
-        window.location.href = '/member/login';
+        window.location.href = `/member/login?redirectUrl=${location.pathname}`;
       }
 
       return false;
     });
-    // if (data.success) {
-    //   return data.data;
-    // } else {
-    //   this.spinner.hide();
-
-    //   const swal: any = {};
-    //   const error = (data.type || data.message);
-    //   if (error.indexOf('未登入') > -1 || error.indexOf('axios') > -1 ||
-    //     error.indexOf('路由') > -1 || error.indexOf('語法') > -1 || error.indexOf('系統錯誤') > -1 ||
-    //     error.indexOf('會員不存在') > -1 || error.indexOf('Token') > -1) {
-    //     swal.title = '系統訊息';
-    //     swal.msg = data.message;
-    //     if (error.indexOf('未登入') > -1 || error.indexOf('Token') > -1) { swal.logout = true }
-    //   } else {
-    //     console.error(data);
-    //     return data;
-    //   }
-
-    //   if (swal.title || swal.msg) {
-    //     swalPopup.fire({
-    //       title: swal.title,
-    //       text: swal.msg,
-    //       icon: 'error',
-    //       allowOutsideClick: false,
-    //       showCloseButton: false,
-    //       showCancelButton: false,
-    //       confirmButtonText: swal.logout ? '立即登入' : '回上一頁',
-    //       customClass: {
-    //         confirmButton: 'btn btn-outline-secondary',
-    //         cancelButton: 'btn btn-outline-secondary'
-    //       },
-    //       buttonsStyling: false,
-    //       timer: swal.logout ? 5000 : null
-    //     }).then((result: any) => {
-    //       if (result.isConfirmed && !swal.logout) { window.history.back() }
-
-    //       if (swal.logout) {
-    //         AuthService.prototype.logout();
-    //         AuthService.prototype.redirectUrl = window.location.href;
-    //       }
-
-    //       return false;
-    //     });
-    //   }
-    // }
   }
 }

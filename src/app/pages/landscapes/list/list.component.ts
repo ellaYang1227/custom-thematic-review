@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Company } from '@data/company';
+import { AuthService } from '@services/auth.service';
 import { LandscapeService } from '@services/landscape.service';
 import { NgxSpinnerService } from 'ngx-spinner';
 
@@ -14,6 +15,7 @@ export class ListComponent implements OnInit {
 
   constructor(
     private titleServer: Title,
+    private authService: AuthService,
     private landscapeService: LandscapeService,
     private spinner: NgxSpinnerService
   ) { }
@@ -21,24 +23,9 @@ export class ListComponent implements OnInit {
   ngOnInit(): void {
     this.titleServer.setTitle(Company.name);
     this.landscapeService.getLandscapes().subscribe(res => {
-      console.log(res)
       this.landscapes = res;
+      if (this.authService.user) { this.landscapeService.myCollects().subscribe() }
       this.spinner.hide();
     });
-
-    this.getMyCollects();
-  }
-
-  getMyCollects() {
-    this.spinner.show();
-    this.landscapeService.myCollects().subscribe(res => {
-      console.log(res)
-      //this.landscapes = res;
-      this.spinner.hide();
-    });
-  }
-
-  onResIsSuccess(success: boolean) {
-    if (success) { this.getMyCollects() }
   }
 }

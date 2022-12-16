@@ -19,8 +19,6 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log(this.authService.cookie_access_token)
-    console.log(this.authService.user)
   }
 
 }

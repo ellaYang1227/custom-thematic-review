@@ -1,4 +1,5 @@
-<a href="#" class="d-block text-decoration-none text-secondary fw-bold"
-  (click)="$event.preventDefault(); changeCollect()"><small>
-    <fa-icon [icon]="['far', 'heart']" class="me-1"></fa-icon>收藏
+<a href="#" class="d-block text-decoration-none fw-bold text-secondary"
+  (click)="$event.preventDefault(); $event.stopPropagation(); changeCollect()"><small>
+    <fa-icon [icon]="[currentCollectId ? 'fas' : 'far', 'heart']" class="me-1"
+      [class.text-warning]="currentCollectId"></fa-icon>收藏
   </small></a>

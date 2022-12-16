@@ -8,6 +8,10 @@ const routes: Routes = [{
   path: 'landscapes',
   loadChildren: () => import('@pages/landscapes/landscapes.module').then(mod => mod.LandscapesModule)
 }, {
+  path: 'myCollects',
+  canActivate: [AuthGuard],
+  loadChildren: () => import('@pages/my-collects/my-collects.module').then(mod => mod.MyCollectsModule)
+}, {
   path: 'member',
   canActivate: [GuestGuard],
   loadChildren: () => import('@pages/member/member.module').then(mod => mod.MemberModule)

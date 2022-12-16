@@ -25,7 +25,6 @@ export class GuestGuard implements CanActivate, CanActivateChild {
   }
 
   checkIndex(url: string): true | UrlTree {
-    console.log(this.authService.user)
     if (!this.authService.user) { return true }
     return this.router.parseUrl('/landscapes');
   }
